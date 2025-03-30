@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\OJT\\CoffeeManagerment\\CoffeeManagement\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EDAA9C2B-10DB-4D66-A66E-C4BD8E59EFCB}|CoffeeManagement\\CoffeeManagement.csproj|d:\\ojt\\coffeemanagerment\\coffeemanagement\\coffeemanagement\\repositories\\implement\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDAA9C2B-10DB-4D66-A66E-C4BD8E59EFCB}|CoffeeManagement\\CoffeeManagement.csproj|solutionrelative:coffeemanagement\\repositories\\implement\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "D:\\OJT\\CoffeeManagerment\\CoffeeManagement\\CoffeeManagement\\Repositories\\Implement\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "CoffeeManagement\\Repositories\\Implement\\GenericRepository.cs",
+              "ToolTip": "D:\\OJT\\CoffeeManagerment\\CoffeeManagement\\CoffeeManagement\\Repositories\\Implement\\GenericRepository.cs",
+              "RelativeToolTip": "CoffeeManagement\\Repositories\\Implement\\GenericRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T17:13:50.918Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
