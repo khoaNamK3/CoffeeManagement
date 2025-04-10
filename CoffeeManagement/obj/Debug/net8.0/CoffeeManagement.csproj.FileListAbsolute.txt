@@ -166,3 +166,4 @@ D:\OJT\CoffeeManagerment\CoffeeManagement\CoffeeManagement\obj\Debug\net8.0\refi
 D:\OJT\CoffeeManagerment\CoffeeManagement\CoffeeManagement\obj\Debug\net8.0\CoffeeManagement.pdb
 D:\OJT\CoffeeManagerment\CoffeeManagement\CoffeeManagement\obj\Debug\net8.0\CoffeeManagement.genruntimeconfig.cache
 D:\OJT\CoffeeManagerment\CoffeeManagement\CoffeeManagement\obj\Debug\net8.0\ref\CoffeeManagement.dll
+D:\OJT\CoffeeManagerment\CoffeeManagement\CoffeeManagement\obj\Debug\net8.0\CoffeeManagement.sourcelink.json
