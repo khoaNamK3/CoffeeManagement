@@ -1,3 +1,4 @@
+using CoffeeManagement.Middleware;
 using CoffeeManagement.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +25,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+// Add the ExceptionHandlerMiddleware to the pipeline
+// comment lai doan code phia duoi neu chuong khong doc duoc loi tu swagger
+// ===============================================
+app.UseMiddleware<ExceptionHandlerMiddleware>();
+// ===============================================
+
 
 app.UseHttpsRedirection();
 
