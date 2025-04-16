@@ -167,3 +167,4 @@ D:\OJT\CoffeeManagerment\CoffeeManagement\CoffeeManagement\obj\Debug\net8.0\Coff
 D:\OJT\CoffeeManagerment\CoffeeManagement\CoffeeManagement\obj\Debug\net8.0\CoffeeManagement.genruntimeconfig.cache
 D:\OJT\CoffeeManagerment\CoffeeManagement\CoffeeManagement\obj\Debug\net8.0\ref\CoffeeManagement.dll
 D:\OJT\CoffeeManagerment\CoffeeManagement\CoffeeManagement\obj\Debug\net8.0\CoffeeManagement.sourcelink.json
+D:\OJT\CoffeeManagerment\CoffeeManagement\CoffeeManagement\bin\Debug\net8.0\AutoMapper.dll
