@@ -27,7 +27,9 @@ namespace CoffeeManagement.Controllers
             var userClaims = User.Claims.Select(x => new {x.Type,x.Value});
             var roles = await _roleService.GetAllRole();
             return Ok(ApiResponseBuilder.BuildResponse(
-                StatusCodes.Status200OK, "Role list retrived Successfully",roles
+                message: "Role list retrived Successfully",
+                data: roles,
+                statusCode: StatusCodes.Status200OK
                 ));
         }
 
@@ -41,7 +43,9 @@ namespace CoffeeManagement.Controllers
         {
             var Role = await _roleService.GetRoleById(id);
                return Ok(ApiResponseBuilder.BuildResponse(
-                StatusCodes.Status200OK, "Get Role  Successfully", Role
+               message: "Get Role  Successfully",
+               data: Role,
+               statusCode: StatusCodes.Status200OK
                 ));
 
         }

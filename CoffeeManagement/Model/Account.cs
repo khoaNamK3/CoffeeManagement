@@ -6,7 +6,8 @@ namespace CoffeeManagement.Model
     public class Account
     {
         [Key]
-        public int AccountId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid AccountId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }

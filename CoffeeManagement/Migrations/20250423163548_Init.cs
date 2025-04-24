@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CoffeeManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstDatabase : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,8 +15,7 @@ namespace CoffeeManagement.Migrations
                 name: "beverages",
                 columns: table => new
                 {
-                    BeverageId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BeverageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BeverageName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Desciption = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -32,8 +31,7 @@ namespace CoffeeManagement.Migrations
                 name: "materials",
                 columns: table => new
                 {
-                    MaterialId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MaterialId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MaterialName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MaterialType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfManufacture = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -63,12 +61,11 @@ namespace CoffeeManagement.Migrations
                 name: "shifts",
                 columns: table => new
                 {
-                    ShiftId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ShiftId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     WorkingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    EndTime = table.Column<TimeSpan>(type: "time", nullable: false)
+                    StartTime = table.Column<TimeOnly>(type: "time", nullable: false),
+                    EndTime = table.Column<TimeOnly>(type: "time", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,8 +76,8 @@ namespace CoffeeManagement.Migrations
                 name: "beverageMaterials",
                 columns: table => new
                 {
-                    BeverageId = table.Column<int>(type: "int", nullable: false),
-                    MaterialId = table.Column<int>(type: "int", nullable: false),
+                    BeverageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MaterialId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     QuantityUsed = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
@@ -104,8 +101,7 @@ namespace CoffeeManagement.Migrations
                 name: "accounts",
                 columns: table => new
                 {
-                    AccountId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -130,8 +126,8 @@ namespace CoffeeManagement.Migrations
                 name: "accountShifts",
                 columns: table => new
                 {
-                    AccountId = table.Column<int>(type: "int", nullable: false),
-                    ShiftId = table.Column<int>(type: "int", nullable: false)
+                    AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ShiftId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -154,9 +150,8 @@ namespace CoffeeManagement.Migrations
                 name: "orders",
                 columns: table => new
                 {
-                    OrderId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AccountId = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -177,9 +172,8 @@ namespace CoffeeManagement.Migrations
                 name: "orderDetail",
                 columns: table => new
                 {
-                    OrderDetailId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    OrderDetailId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
@@ -198,8 +192,8 @@ namespace CoffeeManagement.Migrations
                 name: "beveragesOrderDetail",
                 columns: table => new
                 {
-                    OrderDetailId = table.Column<int>(type: "int", nullable: false),
-                    BeverageId = table.Column<int>(type: "int", nullable: false),
+                    OrderDetailId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BeverageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

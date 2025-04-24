@@ -17,7 +17,7 @@ namespace CoffeeManagement.Model
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int BeverageId { get; set; }
+        public Guid BeverageId { get; set; }
         public string BeverageName { get; set; }
         public string Desciption { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using FluentValidation.Results;
+using System.Net;
 
 namespace CoffeeManagement.Exceptions
 {
@@ -42,14 +43,16 @@ namespace CoffeeManagement.Exceptions
             }
         }
 
+        
         public class ValidationException : ApiException 
         {
-        public ValidationException(string message)
-                : base(message, HttpStatusCode.UnprocessableEntity) // or another appropriate status code
-            { 
+            public List<ValidationFailure> Errors { get; }
+            public ValidationException(List<ValidationFailure> errors)
+                : base("Validation failed", HttpStatusCode.UnprocessableEntity) // or another appropriate status code
+            {
+                Errors = errors;
             }
         }
-
         public class ForbiddenException : ApiException
         {
             public ForbiddenException(string message)

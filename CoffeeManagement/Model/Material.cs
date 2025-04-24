@@ -6,7 +6,8 @@ namespace CoffeeManagement.Model
     public class Material
     {
         [Key]
-        public int MaterialId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid MaterialId { get; set; }
         public string MaterialName { get; set; }
         public string MaterialType { get; set; }
         public DateTime DateOfManufacture { get; set; }

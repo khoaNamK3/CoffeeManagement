@@ -87,6 +87,8 @@ namespace CoffeeManagement.Middleware
                 {
                     badRequest = badRequestEx.Message
                 },
+               
+
                 _ => new { } // same default
             };
         }
@@ -96,14 +98,26 @@ namespace CoffeeManagement.Middleware
             var (statusCode, message, reason) = exception switch
             {
                 ApiException apiEx =>((int)apiEx.StatusCode, GetExceptionMessage(apiEx),apiEx.Message),
-                InvalidOperationException =>(StatusCodes.Status400BadRequest,"Invalid Operation",exception.Message),
+                InvalidOperationException => (StatusCodes.Status400BadRequest,"Invalid Operation",exception.Message),
                 _=>(StatusCodes.Status500InternalServerError ,"Internal Server Error",
                 _environment.IsDevelopment()?exception.Message: "An unexpected error occurred")
             };
+
+            // Handle ValidationException and collect errors in a list
+            List<object>? validationErrors = null;
+
+            if (exception is ValidationException validationEx && statusCode == StatusCodes.Status422UnprocessableEntity)
+            {
+                validationErrors = validationEx.Errors.Count == 1
+                    ? new List<object> { new { validationEx.Errors[0].PropertyName, validationEx.Errors[0].ErrorMessage } }
+                    : validationEx.Errors.Select(e => new { e.PropertyName, e.ErrorMessage }).Cast<object>().ToList();
+            }
+
             var errorResponse = ApiResponseBuilder.BuildErrorsResponse(data: new
             {
                 ErrorId = errorId,
                 TimeSpan = DateTime.UtcNow,
+                ValidationErrors = validationErrors,// Only include validationErrors if present
                 Details = GetAdditionalInfo(exception)
             },
             statusCode: statusCode,

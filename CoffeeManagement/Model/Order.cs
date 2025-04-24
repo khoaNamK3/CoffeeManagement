@@ -13,9 +13,9 @@ namespace CoffeeManagement.Model
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int OrderId { get; set; }
+        public Guid OrderId { get; set; }
 
-        public int AccountId { get; set; }
+        public Guid AccountId { get; set; }
 
         [ForeignKey("AccountId")]
         public virtual Account Account { get; set; } // One-to-Many: Account to Orders

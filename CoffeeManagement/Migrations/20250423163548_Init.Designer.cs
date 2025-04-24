@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoffeeManagement.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20250321143527_FirstDatabase")]
-    partial class FirstDatabase
+    [Migration("20250423163548_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,9 @@ namespace CoffeeManagement.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Model.Account", b =>
                 {
-                    b.Property<int>("AccountId")
+                    b.Property<Guid>("AccountId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -72,11 +70,11 @@ namespace CoffeeManagement.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Model.AccountShift", b =>
                 {
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ShiftId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ShiftId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("AccountId", "ShiftId");
 
@@ -87,11 +85,9 @@ namespace CoffeeManagement.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Model.Beverage", b =>
                 {
-                    b.Property<int>("BeverageId")
+                    b.Property<Guid>("BeverageId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BeverageId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("BeverageName")
                         .IsRequired()
@@ -117,11 +113,11 @@ namespace CoffeeManagement.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Model.BeverageMaterial", b =>
                 {
-                    b.Property<int>("BeverageId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("BeverageId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("MaterialId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("MaterialId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("QuantityUsed")
                         .HasColumnType("decimal(18,2)");
@@ -135,11 +131,11 @@ namespace CoffeeManagement.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Model.BeveragesOrderDetail", b =>
                 {
-                    b.Property<int>("OrderDetailId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("OrderDetailId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("BeverageId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("BeverageId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -153,11 +149,9 @@ namespace CoffeeManagement.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Model.Material", b =>
                 {
-                    b.Property<int>("MaterialId")
+                    b.Property<Guid>("MaterialId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaterialId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateOfManufacture")
                         .HasColumnType("datetime2");
@@ -189,14 +183,12 @@ namespace CoffeeManagement.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Model.Order", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<Guid>("OrderId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -220,14 +212,12 @@ namespace CoffeeManagement.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Model.OrderDetail", b =>
                 {
-                    b.Property<int>("OrderDetailId")
+                    b.Property<Guid>("OrderDetailId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailId"));
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -258,19 +248,17 @@ namespace CoffeeManagement.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Model.Shift", b =>
                 {
-                    b.Property<int>("ShiftId")
+                    b.Property<Guid>("ShiftId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShiftId"));
-
-                    b.Property<TimeSpan>("EndTime")
+                    b.Property<TimeOnly>("EndTime")
                         .HasColumnType("time");
 
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<TimeSpan>("StartTime")
+                    b.Property<TimeOnly>("StartTime")
                         .HasColumnType("time");
 
                     b.Property<DateTime>("WorkingDate")

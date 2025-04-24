@@ -1,9 +1,11 @@
+using CoffeeManagement.Filter;
 using CoffeeManagement.Middleware;
 using CoffeeManagement.Model;
 using CoffeeManagement.Repositories.Implement;
 using CoffeeManagement.Repositories.Interface;
 using CoffeeManagement.Services.Implement;
 using CoffeeManagement.Services.Interface;
+using CoffeeManagement.Validations;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,25 @@ var builder = WebApplication.CreateBuilder(args);
 //Add connectionString
 builder.Services.AddDbContext<DataBaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// add  JsonConverter for TimeOnly
+builder.Services.AddControllers()
+    .AddJsonOptions(opt =>
+    {
+        opt.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
+    });
+
+// Timline fomatting
+builder.Services.AddSwaggerGen(options =>
+{
+    options.MapType<TimeOnly>(() => new Microsoft.OpenApi.Models.OpenApiSchema
+    {
+        Type = "string",
+        Format = "time",
+        Example = new Microsoft.OpenApi.Any.OpenApiString("08:00")
+    });
+});
+
 
 // add IUnitOfWork and UnitOfWork
 builder.Services.AddScoped<IUnitOfWork<DataBaseContext>, UnitOfWork<DataBaseContext>>();
@@ -23,6 +44,9 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //Add Interface and service
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IShiftService,ShiftService>();
+
+// Add validation 
+builder.Services.AddScoped<ShiftValidation>();
 
 // Add services to the container.
 

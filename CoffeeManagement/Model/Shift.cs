@@ -7,7 +7,7 @@ namespace CoffeeManagement.Model
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ShiftId { get; set; }
+        public Guid ShiftId { get; set; }
 
         
         public DateTime WorkingDate { get; set; }  
@@ -17,9 +17,9 @@ namespace CoffeeManagement.Model
         public decimal Salary { get; set; }  
 
        
-        public TimeSpan StartTime { get; set; } 
+        public TimeOnly StartTime { get; set; } 
 
-        public TimeSpan EndTime { get; set; } 
+        public TimeOnly EndTime { get; set; } 
 
         // Many-to-Many
         public virtual ICollection<AccountShift> AccountShifts { get; set; } = new List<AccountShift>();

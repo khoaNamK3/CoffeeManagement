@@ -7,10 +7,10 @@ namespace CoffeeManagement.Model
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int OrderDetailId { get; set; }
+        public Guid OrderDetailId { get; set; }
 
         // One-to-Many: Order → OrderDetail
-        public int OrderId { get; set; }
+        public Guid OrderId { get; set; }
         [ForeignKey("OrderId")]
         public virtual Order Order { get; set; }
 

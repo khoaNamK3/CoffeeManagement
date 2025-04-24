@@ -40,6 +40,11 @@
 
             public const string GetShiftEndPoint = ShiftEndPoint + "/{id}";
 
+            public const string CreateShiftEndPoint = ShiftsEndPoint + "/create";
+
+            public const string UpdateShiftEndPoint = ShiftEndPoint + "/update";
+
+            public const string DeleteShiftEndPoint = ShiftEndPoint + "/delete";
         }
     }
 }

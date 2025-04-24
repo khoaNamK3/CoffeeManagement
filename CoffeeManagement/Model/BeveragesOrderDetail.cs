@@ -6,11 +6,11 @@ namespace CoffeeManagement.Model
     public class BeveragesOrderDetail
     {
         [Key]
-        public int OrderDetailId { get; set; }
+        public Guid OrderDetailId { get; set; }
         [ForeignKey("OrderDetailId")]
         public virtual OrderDetail OrderDetail { get; set; }
 
-        public int BeverageId { get; set; }
+        public Guid BeverageId { get; set; }
         [ForeignKey("BeverageId")]
         public virtual Beverage Beverage { get; set; }
 
