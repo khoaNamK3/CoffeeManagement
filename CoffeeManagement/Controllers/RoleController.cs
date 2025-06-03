@@ -1,10 +1,10 @@
 ﻿using CoffeeManagement.Constant;
 using CoffeeManagement.MetaData;
+using CoffeeManagement.Model;
 using CoffeeManagement.ResponseModel.Role;
 using CoffeeManagement.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections;
-using System.Data.SqlTypes;
+
 
 namespace CoffeeManagement.Controllers
 {
@@ -39,7 +39,7 @@ namespace CoffeeManagement.Controllers
         [ProducesResponseType(typeof(ApiResponse<object>),StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
         //Authentication
-        public async Task<IActionResult> GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] Role.RoleType id)
         {
             var Role = await _roleService.GetRoleById(id);
                return Ok(ApiResponseBuilder.BuildResponse(

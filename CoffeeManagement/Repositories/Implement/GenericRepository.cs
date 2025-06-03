@@ -143,6 +143,18 @@ namespace CoffeeManagement.Repositories.Implement
         }
         #endregion
 
+        #region GetById 
+        // new update 8/5/2025
+        public virtual async Task<T> GetByIdAsync(params object[] keyValues)
+        {
+            return await _dbSet.FindAsync(keyValues);
+        }
+        public async Task<T> FindAsync(object id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
+        #endregion
+
         #region Insert 
         public async Task InsertAsync(T entity)
         {
@@ -166,7 +178,9 @@ namespace CoffeeManagement.Repositories.Implement
         {
             _dbSet.UpdateRange(entities);
         }
+        #endregion
 
+        #region Delete
         public void DeleteAsync(T entity)
         {
             _dbSet.Remove(entity);
@@ -176,7 +190,7 @@ namespace CoffeeManagement.Repositories.Implement
         {
             _dbSet.RemoveRange(entities);
         }
-
+        #endregion
         public virtual IQueryable<T> CreateBaseQuery(
             Expression<Func<T, bool>> predicate = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
@@ -196,6 +210,7 @@ namespace CoffeeManagement.Repositories.Implement
 
             return query;
         }
-        #endregion
+       
     }
+
 }

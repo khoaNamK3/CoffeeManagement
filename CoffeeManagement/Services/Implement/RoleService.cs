@@ -8,6 +8,7 @@ using CoffeeManagement.Template;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using static CoffeeManagement.Constant.ApiEndPointConstant;
 using static CoffeeManagement.Exceptions.ApiException;
 
 
@@ -37,20 +38,20 @@ namespace CoffeeManagement.Services.Implement
             }
         }
 
-        public async Task<RoleResponse> GetRoleById(int roleId)
+        public async Task<RoleResponse> GetRoleById(Role.RoleType roleId)
         {
             try
             {
-                var RoleType = (Role.RoleType)roleId;
-                var respone = await _unitOfWork.GetRepository<Role>().FirstOrDefaultAsync(
-                    predicate: r => r.Id == RoleType
-                    );
+                var response = await _unitOfWork.GetRepository<Role>().FirstOrDefaultAsync(
+                    predicate: r => r.Id == roleId
+                );
 
-                if (respone == null)
+
+                if (response == null)
                 {
                     throw new NotFoundException($"Role with Id {roleId} not found");
                 }
-                return _mapper.Map<RoleResponse>(respone);
+                return _mapper.Map<RoleResponse>(response);
             }
             catch (Exception ex) {
                 _logger.LogError(ex, "Error retrieving Role :{Message}", ex.Message);
@@ -58,5 +59,6 @@ namespace CoffeeManagement.Services.Implement
             }
 
         }
+
     }
 }

@@ -61,6 +61,13 @@ namespace CoffeeManagement.Repositories.Interface
 
         #endregion
 
+        #region GetById
+         // new update 8/5/2025
+        Task<T> GetByIdAsync(params object[] keyValues);
+
+        Task<T> FindAsync(object id);
+        #endregion
+
         #region Insert
 
         Task InsertAsync(T entity);

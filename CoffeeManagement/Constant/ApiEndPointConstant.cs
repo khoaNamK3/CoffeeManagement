@@ -33,7 +33,7 @@
 
         public static class shift 
         {
-            // use fir Post(Create) and GetAll
+            // use for Post(Create) and GetAll
             public const string ShiftsEndPoint = ApiEndpoint + "/shifts";
             // user for GetById,Update,Delete
             public const string ShiftEndPoint = ApiEndpoint + "/shift";
@@ -45,6 +45,23 @@
             public const string UpdateShiftEndPoint = ShiftEndPoint + "/update";
 
             public const string DeleteShiftEndPoint = ShiftEndPoint + "/delete";
+        }
+
+        public static class Account
+        {
+            // use for Post(Create) and GetAll
+            public const string AccountsEndPoint = ApiEndpoint + "/accounts";
+            // use for GetById, Update,Delete
+            public const string AccountEndPoint = ApiEndpoint + "/account";
+
+            public const string GetAccountEndPoint = AccountEndPoint + "{id}";
+
+            public const string CreateAccountEndPoint = AccountsEndPoint + "/create";
+
+            public const string UpdateAccountEndPoint = AccountEndPoint + "/update";
+
+            public const string DeleteAccountEndPoint = AccountEndPoint + "/delete";
+
         }
     }
 }

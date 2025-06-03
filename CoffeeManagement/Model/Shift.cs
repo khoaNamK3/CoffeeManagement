@@ -22,7 +22,7 @@ namespace CoffeeManagement.Model
         public TimeOnly EndTime { get; set; } 
 
         // Many-to-Many
-        public virtual ICollection<AccountShift> AccountShifts { get; set; } = new List<AccountShift>();
+        public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 
         // Ensure EndTime is after StartTime
         public bool IsValidShift()

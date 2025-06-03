@@ -6,7 +6,6 @@ using CoffeeManagement.ResponseModel.Shift;
 using CoffeeManagement.Services.Interface;
 using CoffeeManagement.Template;
 using CoffeeManagement.Validations;
-using static CoffeeManagement.Constant.ApiEndPointConstant;
 using static CoffeeManagement.Exceptions.ApiException;
 
 namespace CoffeeManagement.Services.Implement

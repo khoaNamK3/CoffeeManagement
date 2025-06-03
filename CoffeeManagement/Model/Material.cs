@@ -22,6 +22,6 @@ namespace CoffeeManagement.Model
         public int ShopPhone { get; set; }
 
         // Many-to-Many: Material ↔ Beverage
-        public virtual ICollection<BeverageMaterial> BeverageMaterials { get; set; } = new List<BeverageMaterial>();
+        public virtual ICollection<Beverage> Beverage { get; set; } = new List<Beverage>();
     }
 }

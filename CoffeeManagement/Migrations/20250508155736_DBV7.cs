@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CoffeeManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class DBV7 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -49,7 +49,7 @@ namespace CoffeeManagement.Migrations
                 name: "roles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Permissions = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -73,25 +73,24 @@ namespace CoffeeManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "beverageMaterials",
+                name: "BeverageMaterial",
                 columns: table => new
                 {
                     BeverageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MaterialId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuantityUsed = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    MaterialsMaterialId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_beverageMaterials", x => new { x.BeverageId, x.MaterialId });
+                    table.PrimaryKey("PK_BeverageMaterial", x => new { x.BeverageId, x.MaterialsMaterialId });
                     table.ForeignKey(
-                        name: "FK_beverageMaterials_beverages_BeverageId",
+                        name: "FK_BeverageMaterial_beverages_BeverageId",
                         column: x => x.BeverageId,
                         principalTable: "beverages",
                         principalColumn: "BeverageId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_beverageMaterials_materials_MaterialId",
-                        column: x => x.MaterialId,
+                        name: "FK_BeverageMaterial_materials_MaterialsMaterialId",
+                        column: x => x.MaterialsMaterialId,
                         principalTable: "materials",
                         principalColumn: "MaterialId",
                         onDelete: ReferentialAction.Cascade);
@@ -105,11 +104,11 @@ namespace CoffeeManagement.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -119,28 +118,28 @@ namespace CoffeeManagement.Migrations
                         column: x => x.RoleId,
                         principalTable: "roles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "accountShifts",
+                name: "AccountShift",
                 columns: table => new
                 {
-                    AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ShiftId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    AccountsAccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    shiftsShiftId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_accountShifts", x => new { x.AccountId, x.ShiftId });
+                    table.PrimaryKey("PK_AccountShift", x => new { x.AccountsAccountId, x.shiftsShiftId });
                     table.ForeignKey(
-                        name: "FK_accountShifts_accounts_AccountId",
-                        column: x => x.AccountId,
+                        name: "FK_AccountShift_accounts_AccountsAccountId",
+                        column: x => x.AccountsAccountId,
                         principalTable: "accounts",
                         principalColumn: "AccountId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_accountShifts_shifts_ShiftId",
-                        column: x => x.ShiftId,
+                        name: "FK_AccountShift_shifts_shiftsShiftId",
+                        column: x => x.shiftsShiftId,
                         principalTable: "shifts",
                         principalColumn: "ShiftId",
                         onDelete: ReferentialAction.Cascade);
@@ -165,7 +164,7 @@ namespace CoffeeManagement.Migrations
                         column: x => x.AccountId,
                         principalTable: "accounts",
                         principalColumn: "AccountId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -174,6 +173,7 @@ namespace CoffeeManagement.Migrations
                 {
                     OrderDetailId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    beverageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
@@ -181,36 +181,17 @@ namespace CoffeeManagement.Migrations
                 {
                     table.PrimaryKey("PK_orderDetail", x => x.OrderDetailId);
                     table.ForeignKey(
+                        name: "FK_orderDetail_beverages_OrderDetailId",
+                        column: x => x.OrderDetailId,
+                        principalTable: "beverages",
+                        principalColumn: "BeverageId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_orderDetail_orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "orders",
                         principalColumn: "OrderId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "beveragesOrderDetail",
-                columns: table => new
-                {
-                    OrderDetailId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BeverageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_beveragesOrderDetail", x => new { x.OrderDetailId, x.BeverageId });
-                    table.ForeignKey(
-                        name: "FK_beveragesOrderDetail_beverages_BeverageId",
-                        column: x => x.BeverageId,
-                        principalTable: "beverages",
-                        principalColumn: "BeverageId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_beveragesOrderDetail_orderDetail_OrderDetailId",
-                        column: x => x.OrderDetailId,
-                        principalTable: "orderDetail",
-                        principalColumn: "OrderDetailId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -219,19 +200,14 @@ namespace CoffeeManagement.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_accountShifts_ShiftId",
-                table: "accountShifts",
-                column: "ShiftId");
+                name: "IX_AccountShift_shiftsShiftId",
+                table: "AccountShift",
+                column: "shiftsShiftId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_beverageMaterials_MaterialId",
-                table: "beverageMaterials",
-                column: "MaterialId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_beveragesOrderDetail_BeverageId",
-                table: "beveragesOrderDetail",
-                column: "BeverageId");
+                name: "IX_BeverageMaterial_MaterialsMaterialId",
+                table: "BeverageMaterial",
+                column: "MaterialsMaterialId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_orderDetail_OrderId",
@@ -248,13 +224,13 @@ namespace CoffeeManagement.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "accountShifts");
+                name: "AccountShift");
 
             migrationBuilder.DropTable(
-                name: "beverageMaterials");
+                name: "BeverageMaterial");
 
             migrationBuilder.DropTable(
-                name: "beveragesOrderDetail");
+                name: "orderDetail");
 
             migrationBuilder.DropTable(
                 name: "shifts");
@@ -264,9 +240,6 @@ namespace CoffeeManagement.Migrations
 
             migrationBuilder.DropTable(
                 name: "beverages");
-
-            migrationBuilder.DropTable(
-                name: "orderDetail");
 
             migrationBuilder.DropTable(
                 name: "orders");

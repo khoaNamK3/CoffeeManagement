@@ -17,10 +17,40 @@ namespace CoffeeManagement.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "8.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AccountShift", b =>
+                {
+                    b.Property<Guid>("AccountsAccountId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("shiftsShiftId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AccountsAccountId", "shiftsShiftId");
+
+                    b.HasIndex("shiftsShiftId");
+
+                    b.ToTable("AccountShift");
+                });
+
+            modelBuilder.Entity("BeverageMaterial", b =>
+                {
+                    b.Property<Guid>("BeverageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MaterialsMaterialId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("BeverageId", "MaterialsMaterialId");
+
+                    b.HasIndex("MaterialsMaterialId");
+
+                    b.ToTable("BeverageMaterial");
+                });
 
             modelBuilder.Entity("CoffeeManagement.Model.Account", b =>
                 {
@@ -52,32 +82,17 @@ namespace CoffeeManagement.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RefreshToken")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("AccountId");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("accounts");
-                });
-
-            modelBuilder.Entity("CoffeeManagement.Model.AccountShift", b =>
-                {
-                    b.Property<Guid>("AccountId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ShiftId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("AccountId", "ShiftId");
-
-                    b.HasIndex("ShiftId");
-
-                    b.ToTable("accountShifts");
                 });
 
             modelBuilder.Entity("CoffeeManagement.Model.Beverage", b =>
@@ -106,42 +121,6 @@ namespace CoffeeManagement.Migrations
                     b.HasKey("BeverageId");
 
                     b.ToTable("beverages");
-                });
-
-            modelBuilder.Entity("CoffeeManagement.Model.BeverageMaterial", b =>
-                {
-                    b.Property<Guid>("BeverageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("MaterialId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("QuantityUsed")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("BeverageId", "MaterialId");
-
-                    b.HasIndex("MaterialId");
-
-                    b.ToTable("beverageMaterials");
-                });
-
-            modelBuilder.Entity("CoffeeManagement.Model.BeveragesOrderDetail", b =>
-                {
-                    b.Property<Guid>("OrderDetailId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BeverageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrderDetailId", "BeverageId");
-
-                    b.HasIndex("BeverageId");
-
-                    b.ToTable("beveragesOrderDetail");
                 });
 
             modelBuilder.Entity("CoffeeManagement.Model.Material", b =>
@@ -222,6 +201,9 @@ namespace CoffeeManagement.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("beverageId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("OrderDetailId");
 
                     b.HasIndex("OrderId");
@@ -231,8 +213,8 @@ namespace CoffeeManagement.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Model.Role", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Permissions")
                         .IsRequired()
@@ -266,72 +248,45 @@ namespace CoffeeManagement.Migrations
                     b.ToTable("shifts");
                 });
 
+            modelBuilder.Entity("AccountShift", b =>
+                {
+                    b.HasOne("CoffeeManagement.Model.Account", null)
+                        .WithMany()
+                        .HasForeignKey("AccountsAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CoffeeManagement.Model.Shift", null)
+                        .WithMany()
+                        .HasForeignKey("shiftsShiftId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BeverageMaterial", b =>
+                {
+                    b.HasOne("CoffeeManagement.Model.Beverage", null)
+                        .WithMany()
+                        .HasForeignKey("BeverageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CoffeeManagement.Model.Material", null)
+                        .WithMany()
+                        .HasForeignKey("MaterialsMaterialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CoffeeManagement.Model.Account", b =>
                 {
                     b.HasOne("CoffeeManagement.Model.Role", "Role")
                         .WithMany("Accounts")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("CoffeeManagement.Model.AccountShift", b =>
-                {
-                    b.HasOne("CoffeeManagement.Model.Account", "Account")
-                        .WithMany("AccountShifts")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CoffeeManagement.Model.Shift", "Shift")
-                        .WithMany("AccountShifts")
-                        .HasForeignKey("ShiftId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Shift");
-                });
-
-            modelBuilder.Entity("CoffeeManagement.Model.BeverageMaterial", b =>
-                {
-                    b.HasOne("CoffeeManagement.Model.Beverage", "Beverage")
-                        .WithMany("BeverageMaterials")
-                        .HasForeignKey("BeverageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CoffeeManagement.Model.Material", "Material")
-                        .WithMany("BeverageMaterials")
-                        .HasForeignKey("MaterialId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Beverage");
-
-                    b.Navigation("Material");
-                });
-
-            modelBuilder.Entity("CoffeeManagement.Model.BeveragesOrderDetail", b =>
-                {
-                    b.HasOne("CoffeeManagement.Model.Beverage", "Beverage")
-                        .WithMany("BeverageOrderDetails")
-                        .HasForeignKey("BeverageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CoffeeManagement.Model.OrderDetail", "OrderDetail")
-                        .WithMany("BeveragesOrders")
-                        .HasForeignKey("OrderDetailId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Beverage");
-
-                    b.Navigation("OrderDetail");
                 });
 
             modelBuilder.Entity("CoffeeManagement.Model.Order", b =>
@@ -339,7 +294,7 @@ namespace CoffeeManagement.Migrations
                     b.HasOne("CoffeeManagement.Model.Account", "Account")
                         .WithMany("Orders")
                         .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Account");
@@ -347,47 +302,41 @@ namespace CoffeeManagement.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Model.OrderDetail", b =>
                 {
-                    b.HasOne("CoffeeManagement.Model.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("CoffeeManagement.Model.Beverage", "Beverage")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderDetailId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("CoffeeManagement.Model.Order", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Beverage");
 
                     b.Navigation("Order");
                 });
 
             modelBuilder.Entity("CoffeeManagement.Model.Account", b =>
                 {
-                    b.Navigation("AccountShifts");
-
                     b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("CoffeeManagement.Model.Beverage", b =>
                 {
-                    b.Navigation("BeverageMaterials");
-
-                    b.Navigation("BeverageOrderDetails");
+                    b.Navigation("OrderDetails");
                 });
 
-            modelBuilder.Entity("CoffeeManagement.Model.Material", b =>
+            modelBuilder.Entity("CoffeeManagement.Model.Order", b =>
                 {
-                    b.Navigation("BeverageMaterials");
-                });
-
-            modelBuilder.Entity("CoffeeManagement.Model.OrderDetail", b =>
-                {
-                    b.Navigation("BeveragesOrders");
+                    b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("CoffeeManagement.Model.Role", b =>
                 {
                     b.Navigation("Accounts");
-                });
-
-            modelBuilder.Entity("CoffeeManagement.Model.Shift", b =>
-                {
-                    b.Navigation("AccountShifts");
                 });
 #pragma warning restore 612, 618
         }

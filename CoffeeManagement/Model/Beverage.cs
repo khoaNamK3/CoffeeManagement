@@ -24,14 +24,11 @@ namespace CoffeeManagement.Model
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
         public int Stock { get; set; }
-
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public BeverageType Type { get; set; }
 
-        // Many-to-Many: Beverage ↔ OrderDetail
-        public virtual ICollection<BeveragesOrderDetail> BeverageOrderDetails { get; set; } = new List<BeveragesOrderDetail>();
-
         // Many-to-Many: Beverage ↔ Material
-        public virtual ICollection<BeverageMaterial> BeverageMaterials { get; set; } = new List<BeverageMaterial>();
+        public virtual ICollection<Material>Materials { get; set; } = new List<Material>();
     }
 }
 

@@ -4,9 +4,8 @@ using CoffeeManagement.MetaData;
 using CoffeeManagement.RequestModel.Shift;
 using CoffeeManagement.ResponseModel.Shift;
 using CoffeeManagement.Services.Interface;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 namespace CoffeeManagement.Controllers
 {
@@ -72,11 +71,12 @@ namespace CoffeeManagement.Controllers
         [HttpPatch(ApiEndPointConstant.shift.UpdateShiftEndPoint)]
         [ProducesResponseType(typeof(ApiResponse<ShiftResponse>),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status422UnprocessableEntity)]
         // Authen
 
-        public async Task<IActionResult> UpdateShift(Guid id, [FromBody]ShiftRequest updateShiftRequest)
+        public async Task<IActionResult> UpdateShift([FromQuery]Guid id, [FromBody]ShiftRequest updateShiftRequest)
         {
             var response = await _shiftService.UpdateShiftById(id, updateShiftRequest);
             return Ok(ApiResponseBuilder.BuildResponse(
@@ -91,7 +91,7 @@ namespace CoffeeManagement.Controllers
         [ProducesResponseType(typeof(ApiResponse<ShiftResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteShift(Guid id)
+        public async Task<IActionResult> DeleteShift([FromQuery]Guid id)
         {
             await _shiftService.DeleteShift(id);
             return Ok(ApiResponseBuilder.BuildResponse(

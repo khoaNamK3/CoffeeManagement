@@ -11,16 +11,16 @@ namespace CoffeeManagement.Model
 
         // One-to-Many: Order → OrderDetail
         public Guid OrderId { get; set; }
-        [ForeignKey("OrderId")]
+
         public virtual Order Order { get; set; }
+
+        public Guid beverageId { get; set; }
+
+        public virtual Beverage Beverage { get; set; }
 
         public int Quantity { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
-
-        // Many-to-Many: OrderDetail ↔ Beverage
-        public virtual ICollection<BeveragesOrderDetail> BeveragesOrders { get; set; } = new List<BeveragesOrderDetail>();
-
     }
 }

@@ -44,9 +44,11 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //Add Interface and service
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IShiftService,ShiftService>();
+builder.Services.AddScoped<IAccountService,AccountService>();
 
 // Add validation 
 builder.Services.AddScoped<ShiftValidation>();
+builder.Services.AddScoped<AccountValidation>();
 
 // Add services to the container.
 
